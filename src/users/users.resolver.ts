@@ -16,6 +16,11 @@ import { ErrorResponse } from './dto/shared/errorResponse';
 export class UsersResolver {
   constructor(private readonly userService: UsersService) {}
 
+  @Query(() => String)
+  sayHello(): string {
+    return 'Hello World!';
+  }
+
   @Mutation(() => [ErrorResponse], { nullable: true })
   async signup(
     @Args('signUpInput') signUpInput: SignUpInput,

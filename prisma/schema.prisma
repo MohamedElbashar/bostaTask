@@ -15,8 +15,8 @@ model User {
   username  String      @unique
   password  String
   Tweet     Tweet[]
-  Followers Followers[] @relation("UsersFollower")
-  Followee  Followers[] @relation("UsersFollowee")
+  Followers Followers[] @relation("follower")
+  followed  Followers[] @relation("followed")
 }
 
 model Tweet {
@@ -28,8 +28,8 @@ model Tweet {
 
 model Followers {
   id         Int  @id @default(autoincrement())
-  user       User @relation("UsersFollower", fields: [userId], references: [id])
-  userId     Int
-  follower   User @relation("UsersFollowee", fields: [followerId], references: [id])
+  follower   User @relation("follower", fields: [followerId], references: [id])
   followerId Int
+  followed   User @relation("followed", fields: [followedId], references: [id])
+  followedId Int
 }
