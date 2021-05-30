@@ -1,0 +1,16 @@
+version: '3'
+services:
+  postgress_db:
+    image: 'postgres'
+    container_name: 'Ass-Postgress'
+    ports:
+      - '5432:5432'
+    volumes:
+      - Ass-Postgress:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+volumes:
+  Ass-Postgress:
