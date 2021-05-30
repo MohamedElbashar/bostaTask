@@ -1,50 +1,29 @@
-import { Injectable } from "@nestjs/common";
-import { v4 as uuidv4 } from 'uuid';
-import { GetUserArgs } from "./dto/args/get-user.args";
-import { GetUsersArgs } from "./dto/args/get-users.args";
-import { CreateUserInput } from "./dto/input/create-user.input";
-import { DeleteUserInput } from "./dto/input/delete-user.input";
-import { UpdateUserInput } from "./dto/input/update-user.input";
-import { User } from "./models/user";
-
+import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { SignUpInput } from './dto/input/signup.input';
+import * as bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { ErrorResponse } from './dto/shared/errorResponse';
 @Injectable()
 export class UsersService {
-    private users: User[] = [];
+  constructor(private readonly prisma: PrismaService) {}
 
-    public createUser(createUserData: CreateUserInput): User {
-        const user: User = {
-            userId: uuidv4(),
-            ...createUserData
-        }
+  async signup(signUpInput: SignUpInput): any {
+    // const exist = this.prisma.user.findFirst({ where:{username: signUpInput.username} });
+  }
 
-        this.users.push(user);
+  //   if (exist) {
+  //     return [{
+  //         path:'username',
+  //         message:'Invalid user name or password'
+  //     }]
+  //   }
 
-        return user;
-    }
-
-    public updateUser(updateUserData: UpdateUserInput): User {
-        const user = this.users.find(user => user.userId === updateUserData.userId);
-
-        Object.assign(user, updateUserData);
-
-        return user;
-    }
-
-    public getUser(getUserArgs: GetUserArgs): User {
-        return this.users.find(user => user.userId === getUserArgs.userId);
-    }
-
-    public getUsers(getUsersArgs: GetUsersArgs): User[] {
-        return getUsersArgs.userIds.map(userId => this.getUser({ userId }));
-    }
-
-    public deleteUser(deleteUserData: DeleteUserInput): User {
-        const userIndex = this.users.findIndex(user => user.userId === deleteUserData.userId);
-
-        const user = this.users[userIndex];
-
-        this.users.splice(userIndex);
-
-        return user;
-    }
+  //   const hashedPassword = await bcrypt.hash(signUpInput.password, 12);
+  //    await this.prisma.user.create({
+  //     data: { username: signUpInput.username, password: hashedPassword },
+  //   });
+  //   return null;
+  // }
 }
