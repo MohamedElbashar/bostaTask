@@ -19,14 +19,14 @@ export class UsersResolver {
   async signup(
     @Args('signUpInput') signUpInput: SignUpInput,
   ): Promise<object[] | null> {
-    return this.userService.signup(signUpInput);
+    return this.userService.signUp(signUpInput);
   }
 
-  @Mutation()
+  @Mutation(() => [ErrorResponse], { nullable: true })
   async login(
     @Args('loginInput') loginInput: LoginInput,
     @Context() ctx: MyContext,
-  ) {
+  ): Promise<object[] | null> {
     return this.userService.login(loginInput, ctx.req);
   }
 }
