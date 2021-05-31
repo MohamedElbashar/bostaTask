@@ -13,10 +13,11 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async signUp(signUpInput: SignUpInput): Promise<ErrorResponse[] | null> {
-    const exist = this.prisma.user.findUnique({
+    const exist = await this.prisma.user.findUnique({
       where: { username: signUpInput.username },
     });
     if (exist) {
+      console.log('exist', exist);
       return [
         {
           path: 'username',
@@ -43,17 +44,17 @@ export class UsersService {
 
     const valid = await bcrypt.compare(loginInput.password, user.password);
     if (!valid) return errorMessage('username', 'Invalid username or password');
-    return null;
 
-    // req.params.username = username;
+    (req as any).session.userId = user.id;
   }
 
-  // async logout(ctx: MyContext) {
-  //   await ctx.req.destroy((err) => {
-  //     console.log(err);
-  //     return false;
-  //   });
-  //   await ctx.res.clearCookie('task');
-  //   return true;
-  // }
+  async logout(ctx: MyContext) {
+    await (ctx.req as any).session?.destroy((err) => {
+      console.log(err);
+      return false;
+    });
+
+    await ctx.res.clearCookie('task');
+    return true;
+  }
 }
