@@ -1,16 +1,28 @@
-import { PrismaService } from 'src/prisma/prisma.service';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { Tweet } from './dto/input/tweet.input';
+import { AddTweet } from './dto/input/tweet.input';
 import { TweetService } from './tweet.service';
-import { GraphQLObjectType } from 'graphql';
-import { Res } from './dto/shared/responseTye';
+import { Res } from './dto/shared/responseType';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/users/guard/auth.guard';
+import { User } from 'src/users/decorators/getUserId.decorator';
+import { Tweet } from './model/tweet';
+import { ErrorResponse } from 'src/users/dto/shared/errorResponse';
 @Resolver(Tweet)
 export class TweetResolver {
   constructor(private readonly tweetService: TweetService) {}
 
-  @Mutation(() => Res, { nullable: true })
-  async addTweet(@Args() tweetContent: Tweet): Promise<Res | null> {
-    await this.tweetService.addTweet(tweetContent, 1);
-    return { success: true };
+  @Query(() => String)
+  sayHello(): string {
+    return 'Hello World!';
+  }
+
+  @Mutation(() => [ErrorResponse], { nullable: true })
+  @UseGuards(AuthGuard)
+  async addTweet(
+    @User() user,
+    @Args('createTweet') createTweet: AddTweet,
+  ): Promise<object[] | null> {
+    console.log('hi resolver');
+    return await this.tweetService.addTweet(createTweet, user.id);
   }
 }

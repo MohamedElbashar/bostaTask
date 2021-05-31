@@ -1,6 +1,6 @@
 export const errorMessage = (path: string, message: string) => [
   {
-    path: 'usernamae',
+    path: 'username',
     message: 'Invalid username or password',
   },
 ];

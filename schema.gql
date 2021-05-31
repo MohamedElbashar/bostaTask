@@ -7,10 +7,6 @@ type ErrorResponse {
   message: String!
 }
 
-type Res {
-  success: Boolean!
-}
-
 type Query {
   sayHello: String!
 }
@@ -19,7 +15,7 @@ type Mutation {
   signup(signUpInput: SignUpInput!): [ErrorResponse!]
   login(loginInput: LoginInput!): [ErrorResponse!]
   logOut: Boolean!
-  addTweet(content: String!): Res
+  addTweet(createTweet: AddTweet!): [ErrorResponse!]
 }
 
 """New User data"""
@@ -32,4 +28,9 @@ input SignUpInput {
 input LoginInput {
   username: String!
   password: String!
+}
+
+"""Tweet Inputs"""
+input AddTweet {
+  content: String!
 }
