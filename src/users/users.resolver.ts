@@ -30,8 +30,8 @@ export class UsersResolver {
     return this.userService.login(loginInput, ctx.req);
   }
 
-  // @Mutation(() => Boolean)
-  // async logOut(@Context() ctx: MyContext) {
-  //   this.userService.logout(ctx);
-  // }
+  @Mutation(() => Boolean)
+  async logOut(@Context() ctx: MyContext) {
+    this.userService.logout(ctx);
+  }
 }

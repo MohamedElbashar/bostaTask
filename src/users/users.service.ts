@@ -37,7 +37,7 @@ export class UsersService {
     loginInput: LoginInput,
     req: Request,
   ): Promise<ErrorResponse[] | null> {
-    const user = await this.prisma.user.findFirst({
+    const user = await this.prisma.user.findUnique({
       where: { username: loginInput.username },
     });
     if (!user) return errorMessage('username', 'Invalid username or password');

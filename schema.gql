@@ -18,6 +18,7 @@ type Query {
 type Mutation {
   signup(signUpInput: SignUpInput!): [ErrorResponse!]
   login(loginInput: LoginInput!): [ErrorResponse!]
+  logOut: Boolean!
   addTweet(content: String!): Res
 }
 
