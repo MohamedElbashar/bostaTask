@@ -29,4 +29,9 @@ export class UsersResolver {
   ): Promise<object[] | null> {
     return this.userService.login(loginInput, ctx.req);
   }
+
+  // @Mutation(() => Boolean)
+  // async logOut(@Context() ctx: MyContext) {
+  //   this.userService.logout(ctx);
+  // }
 }

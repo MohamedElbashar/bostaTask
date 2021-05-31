@@ -9,7 +9,7 @@ import { TweetModule } from './tweet/tweet.module';
   imports: [
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
-      context: ({ req }) => ({ req }),
+      context: ({ req, res }) => ({ req, res }),
     }),
     UsersModule,
     PrismaModule,

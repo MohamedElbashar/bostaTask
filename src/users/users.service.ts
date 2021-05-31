@@ -7,6 +7,7 @@ import { ErrorResponse } from './dto/shared/errorResponse';
 import { errorMessage } from './dto/shared/errorMessage';
 import { LoginInput } from './dto/input/login.input';
 import { Request } from 'express';
+import { MyContext } from 'src/types/myContext';
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
@@ -44,6 +45,15 @@ export class UsersService {
     if (!valid) return errorMessage('username', 'Invalid username or password');
     return null;
 
-    // req.session.userId = user.id;
+    // req.params.username = username;
   }
+
+  // async logout(ctx: MyContext) {
+  //   await ctx.req.destroy((err) => {
+  //     console.log(err);
+  //     return false;
+  //   });
+  //   await ctx.res.clearCookie('task');
+  //   return true;
+  // }
 }
