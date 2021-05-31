@@ -1,16 +1,10 @@
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-// import { GetUserArgs } from './dto/args/get-user.args';
-// import { GetUsersArgs } from './dto/args/get-users.args';
-// import { CreateUserInput } from './dto/input/create-user.input';
-// import { DeleteUserInput } from './dto/input/delete-user.input';
-// import { UpdateUserInput } from './dto/input/update-user.input';
-
+import { Resolver, Query, Args, Mutation, Context } from '@nestjs/graphql';
 import { User } from './models/user';
 import { UsersService } from './users.service';
 import { SignUpInput } from './dto/input/signup.input';
-import { Prisma } from '.prisma/client';
 import { ErrorResponse } from './dto/shared/errorResponse';
+import { LoginInput } from './dto/input/login.input';
+import { MyContext } from 'src/types/myContext';
 
 @Resolver(User)
 export class UsersResolver {
@@ -26,5 +20,13 @@ export class UsersResolver {
     @Args('signUpInput') signUpInput: SignUpInput,
   ): Promise<object[] | null> {
     return this.userService.signup(signUpInput);
+  }
+
+  @Mutation()
+  async login(
+    @Args('loginInput') loginInput: LoginInput,
+    @Context() ctx: MyContext,
+  ) {
+    return this.userService.login(loginInput, ctx.req);
   }
 }

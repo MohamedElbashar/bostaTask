@@ -1,6 +1,6 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
 
-@ObjectType()
+@ArgsType()
 export class Tweet {
   @Field()
   content: string;

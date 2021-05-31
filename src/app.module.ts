@@ -8,7 +8,8 @@ import { TweetModule } from './tweet/tweet.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      autoSchemaFile: true
+      autoSchemaFile: 'schema.gql',
+      context: ({ req }) => ({ req }),
     }),
     UsersModule,
     PrismaModule,
