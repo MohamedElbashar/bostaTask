@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import * as session from 'express-session';
-import { SESSION_SECRET } from './core/constant';
+import { AppModule } from './app.module';
+import { SESSION_SECRET } from './common/constants/index';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(
